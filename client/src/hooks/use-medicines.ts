@@ -53,7 +53,7 @@ export function useAnalyzePrescriptions() {
   return useMutation({
     mutationFn: async (data: AnalysisRequest) => {
       const validated = api.analysis.analyze.input.parse(data);
-      const res = await fetch('http://localhost:5001/api/analyze', {
+      const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(validated),
