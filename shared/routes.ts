@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { medicines, analysisRequestSchema, insertMedicineSchema } from './schema';
+import { medicines, insertMedicineSchema, analysisRequestSchema } from './schema';
+export { analysisRequestSchema };
 
 export const errorSchemas = {
   validation: z.object({
