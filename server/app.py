@@ -113,6 +113,7 @@ def analyze():
             results.append({
                 'original': med_name,
                 'found': False,
+                'price': None,
                 'ingredients': [],
                 'generics': [],
                 'savings': 0,
@@ -153,6 +154,7 @@ def analyze():
         results.append({
             'original': branded_med.name,
             'found': True,
+            'price': branded_med.price,
             'ingredients': list(branded_ingredients),
             'generics': generic_alternatives,
             'savings': max_savings,

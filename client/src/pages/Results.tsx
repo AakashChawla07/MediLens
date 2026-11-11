@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, AlertCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
-import { AnalysisResultCard } from "@/components/AnalysisResultCard";
+import { AnalysisResultCard, formatRupees } from "@/components/AnalysisResultCard";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 // Reuse local types
@@ -21,6 +21,7 @@ interface Medicine {
 interface AnalysisResult {
   original: string;
   found: boolean;
+  price: number | null;
   ingredients: string[];
   generics: Medicine[];
   savings: number;
@@ -89,7 +90,7 @@ export default function Results() {
                 className="bg-gradient-to-br from-green-500 to-emerald-600 text-white p-4 rounded-xl shadow-lg shadow-green-500/20"
               >
                 <p className="text-green-50 text-xs font-medium uppercase tracking-wider mb-1">Total Potential Savings</p>
-                <p className="text-3xl font-bold">₹{(totalSavings / 100).toFixed(0)}</p>
+                <p className="text-3xl font-bold">₹{formatRupees(totalSavings)}</p>
               </motion.div>
             )}
           </motion.div>
