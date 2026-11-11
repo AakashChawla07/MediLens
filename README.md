@@ -51,3 +51,11 @@ Human‑readable explanations
 Safety disclaimers
 
 Zero misleading recommendations
+
+# 🧪 Running Tests
+The Flask API has automated tests written with pytest. They use Flask's test client and the bundled SQLite database (`server/medilens.db`), so no server needs to be running.
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest server
+```

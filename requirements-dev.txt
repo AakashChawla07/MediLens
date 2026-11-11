@@ -1,0 +1,4 @@
+-r requirements.txt
+# flask-cors is imported by server/app.py
+flask-cors
+pytest
