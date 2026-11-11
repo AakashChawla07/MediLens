@@ -23,6 +23,7 @@ interface Medicine {
 interface ResultProps {
   original: string;
   found: boolean;
+  price: number | null;
   ingredients: string[];
   generics: Medicine[];
   savings: number;
@@ -30,9 +31,18 @@ interface ResultProps {
   index: number;
 }
 
+// Prices from the API are in rupees, e.g. 1200 -> "1,200" and 4.5 -> "4.50"
+export function formatRupees(amount: number) {
+  return amount.toLocaleString("en-IN", {
+    minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function AnalysisResultCard({ 
   original, 
   found, 
+  price,
   ingredients, 
   generics, 
   savings, 
@@ -67,6 +77,12 @@ export function AnalysisResultCard({
                 )}
               </div>
               
+              {found && typeof price === "number" && (
+                <p className="text-sm text-muted-foreground">
+                  Brand price: <span className="font-semibold text-foreground">₹{formatRupees(price)}</span>
+                </p>
+              )}
+
               {found && (
                 <div className="flex flex-wrap gap-2 mt-2">
                   <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mr-1 py-1">Active Ingredients:</span>
@@ -87,7 +103,7 @@ export function AnalysisResultCard({
                 <div>
                   <p className="text-sm font-medium text-green-800 dark:text-green-300">Potential Savings</p>
                   <p className="text-xl font-bold text-green-700 dark:text-green-400">
-                    ₹{(savings / 100).toFixed(0)}
+                    ₹{formatRupees(savings)}
                   </p>
                 </div>
               </div>
@@ -134,7 +150,12 @@ export function AnalysisResultCard({
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-foreground">₹{(med.price / 100).toFixed(0)}</p>
+                      <p className="font-bold text-foreground">₹{formatRupees(med.price)}</p>
+                      {typeof price === "number" && (
+                        <p className="text-xs font-medium text-green-700 dark:text-green-400 whitespace-nowrap">
+                          Save ₹{formatRupees(price - med.price)} ({Math.round(((price - med.price) / price) * 100)}%)
+                        </p>
+                      )}
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
